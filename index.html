@@ -2,48 +2,47 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Imperium Star </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Imperium Star - Elite Hype Drop (4K Mobile)</title>
     <style>
         /* --- VARIABLES DE DISEÑO (FUTURISTAS) --- */
         :root {
             --neon-blue: #00f2fe; /* Azul tecnológico */
-            --neon-pink: #ff00de; /* Rosa Hellstar */
-            --glass-bg: rgba(255, 255, 255, 0.01); /* Cristal casi invisible */
-            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass-bg: rgba(0, 0, 0, 0.9); /* Cristal negro casi opaco */
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --font-main: 'Arial Black', Gadget, sans-serif;
             --text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px var(--neon-blue);
         }
 
         /* --- ESTILOS MAESTROS (Negro Absoluto) --- */
         body {
-            background-color: #000; /* Negro total */
-            /* --- FONDO DE IMAGEN EDITABLE CON CAPA OSCURA --- */
+            background-color: #000;
             background-image: 
-                linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.95)), /* Capa oscura encima */
-                url('fondo.png'); /* CAMBIA 'TU_FONDO.jpg' por tu imagen de fondo */
+                linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.95)),
+                url('fondo.png'); /* Asegúrate de tener 'fondo.png' en GitHub */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: #fff;
-            font-family: 'Arial Black', Gadget, sans-serif;
+            font-family: var(--font-main);
             margin: 0;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow-x: hidden; /* Evita scrolls laterales */
-            perspective: 1000px; /* Necesario para efectos 3D */
         }
 
-        /* --- LOGO ANIMADO "GLITCH NEÓN" --- */
+        /* --- LOGO ANIMADO "GLITCH NEÓN" (RESPONSIVE) --- */
+        .brand-header { text-align: center; padding: clamp(40px, 10vw, 80px) 20px; }
+
         .brand-logo {
-            font-size: 5rem;
-            letter-spacing: 15px;
+            font-size: clamp(2.5rem, 8vw, 5rem); /* Se ajusta solo según pantalla */
+            letter-spacing: clamp(5px, 2vw, 15px);
             text-transform: uppercase;
             color: #fff;
             text-shadow: var(--text-shadow);
-            margin-top: 100px;
-            margin-bottom: 20px;
-            animation: logoGlitch 1s infinite alternate, neonPulse 2s infinite alternate;
-            position: relative;
+            animation: logoGlitch 1.5s infinite alternate, neonPulse 3s infinite alternate;
+            margin: 0;
         }
 
         /* Animación de Falla Eléctrica (Glitch) */
@@ -59,223 +58,150 @@
         /* Animación de Pulso de Neón */
         @keyframes neonPulse {
             0% { text-shadow: var(--text-shadow); }
-            100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue), 0 0 80px var(--neon-blue); }
+            100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue); }
         }
 
         .collection-title {
-            font-size: 1.2rem;
+            font-size: clamp(0.9rem, 1.5vw, 1.2rem);
             color: #aaa;
             letter-spacing: 5px;
             text-transform: uppercase;
-            margin-bottom: 80px;
+            margin-top: 15px;
             opacity: 0;
-            animation: fadeIn 1s ease 0.5s forwards; /* Aparece después del logo */
+            animation: fadeInDown 1s ease 0.5s forwards;
         }
 
-        @keyframes fadeIn {
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- REJILLA DE PRODUCTOS (Rejilla Tech) --- */
+        /* --- REJILLA DE PRODUCTOS (Rejilla Tech Responsive) --- */
         .catalog-container {
-            width: 95%;
+            width: 90%;
             max-width: 1400px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Rejilla adaptable */
-            gap: 50px;
-            padding-bottom: 150px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Adaptable */
+            gap: 30px;
+            padding-bottom: clamp(60px, 10vw, 120px);
         }
 
-        /* --- TARJETA DE PRODUCTO "GLASS 3D" (Efecto AAA) --- */
+        /* --- TARJETA DE PRODUCTO "GLASS" CON ANIMACIONES --- */
         .product-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(15px); /* Desenfoque de cristal */
+            backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 30px;
+            padding: 25px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            cursor: pointer;
-            transform-style: preserve-3d; /* Necesario para efectos 3D */
+            transition: 0.3s ease, border-color 0.3s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            opacity: 0; /* Aparece con animación */
-            transform: translateY(30px);
             animation: cardAppear 0.8s ease forwards;
         }
 
-        /* Animación de aparición escalonada (vía JS) */
-        @keyframes cardAppear {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* Efecto de Luz de Borde Neón (Hover/Celular) */
+        .product-card:hover { border-color: rgba(0, 242, 254, 0.4); }
 
-        /* Efecto de Luz de Borde Neón (Hover) */
-        .product-card:hover {
-            box-shadow: 0 20px 60px rgba(0, 242, 254, 0.2);
-            border-color: rgba(0, 242, 254, 0.4);
-        }
+        .product-card img { width: 100%; border-radius: 10px; margin-bottom: 20px; transition: 0.3s ease; }
 
-        /* Pseudoelemento para la luz de borde neón */
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(transparent, transparent, transparent, var(--neon-blue));
-            animation: rotateNeon 4s linear infinite;
-            z-index: 1;
-            opacity: 0; /* Oculto por defecto */
-            transition: opacity 0.3s ease;
-        }
-
-        .product-card:hover::before {
-            opacity: 0.3; /* Se ilumina al hover */
-        }
-
-        @keyframes rotateNeon {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Contenedor de imagen (Con efecto de sombra tech) */
-        .img-container {
-            width: 100%;
-            height: 350px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 2; /* Sobre el neón */
-            transition: transform 0.3s ease;
-        }
-
-        img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-            transition: transform 0.5s ease, filter 0.3s ease;
-        }
-
-        /* Zoom sutil a la ropa al hover */
-        .product-card:hover img {
-            transform: scale(1.05) translateZ(20px); /* 3D */
-            filter: drop-shadow(0 0 15px rgba(255,255,255,0.8));
-        }
-
-        /* DETALLES DEL PRODUCTO */
-        .product-info {
-            position: relative;
-            z-index: 2; /* Sobre el neón */
-            text-transform: uppercase;
-            transition: transform 0.3s ease;
-        }
+        /* Zoom sutil a la ropa al hover (Escritorio) */
+        @media (hover: hover) { .product-card:hover img { transform: scale(1.05); } }
 
         /* Títulos de las playeras (ANIMADOS AL HOVER) */
         .brand-model {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2vw, 1.1rem);
             letter-spacing: 2px;
             color: #ddd;
             margin-bottom: 8px;
             position: relative;
             display: inline-block;
+            text-transform: uppercase;
         }
 
-        /* Efecto de subrayado neón al hover */
-        .brand-model::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -3px;
-            left: 50%;
-            background-color: var(--neon-blue);
-            transition: width 0.3s ease, left 0.3s ease;
+        /* Efecto de subrayado neón al hover (Escritorio) */
+        @media (hover: hover) {
+            .brand-model::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -3px;
+                left: 50%;
+                background-color: var(--neon-blue);
+                transition: width 0.3s ease, left 0.3s ease;
+            }
+            .product-card:hover .brand-model::after { width: 100%; left: 0; }
         }
 
-        .product-card:hover .brand-model::after {
-            width: 100%;
-            left: 0;
-        }
-
-        .model-variant {
-            font-size: 0.8rem;
-            color: #666;
-            margin-bottom: 25px;
-            letter-spacing: 1px;
-        }
-
-        /* BOTÓN INTERACTIVO "TECH" (El efecto Pro) */
+        /* BOTÓN INTERACTIVO "TECH" (Adaptado a móvil) */
         .view-btn {
-            display: inline-block;
-            padding: 12px 35px;
+            display: block;
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
             background: transparent;
             border: 2px solid #fff;
             color: #fff;
-            font-family: 'Arial Black', sans-serif;
+            font-family: var(--font-main);
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             border-radius: 10px;
             cursor: pointer;
-            transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            transition: 0.3s;
             position: relative;
             z-index: 2;
         }
 
-        .view-btn:hover {
-            background: #fff;
-            color: #000;
-            box-shadow: 0 0 20px #fff;
-            border-color: #fff;
-        }
+        .view-btn:hover { background: #fff; color: #000; box-shadow: 0 0 20px #fff; }
 
         /* --- MODAL (VENTANA EMERGENTE DE DETALLES - AAA) --- */
         .modal {
             display: none; /* Oculto por defecto */
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
+            background: rgba(0,0,0,0.98);
             z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            overflow-y: auto; /* Scroll para móvil */
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             animation: modalFadeIn 0.5s ease;
+            padding: clamp(10px, 3vw, 30px);
+            box-sizing: border-box;
         }
 
         @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .modal-content {
             background: #111;
-            width: 95%;
-            max-width: 1200px;
-            height: 90vh;
+            margin: 20px auto;
+            width: 100%;
+            max-width: 1100px;
+            min-height: 80vh;
             border-radius: 20px;
             border: 1px solid var(--neon-blue);
-            box-shadow: 0 0 50px rgba(0, 242, 254, 0.2);
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Lado izquierdo foto grande, derecho detalles */
-            overflow: hidden;
+            display: flex;
+            flex-direction: column; /* Columna para móvil */
             position: relative;
             opacity: 0;
             transform: scale(0.9);
             animation: modalContentAppear 0.5s ease 0.2s forwards;
+            overflow: hidden;
         }
+
+        @media (min-width: 768px) { .modal-content { flex-direction: row; } }
 
         @keyframes modalContentAppear { to { opacity: 1; transform: scale(1); } }
 
         .close-btn {
             position: absolute;
-            top: 25px; right: 30px;
-            font-size: 2.5rem; color: #fff; cursor: pointer; z-index: 10;
-            transition: transform 0.3s ease, color 0.3s ease;
+            top: 15px; right: 20px;
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            color: #fff; cursor: pointer; z-index: 10;
         }
-        .close-btn:hover { transform: rotate(90deg); color: var(--neon-blue); }
 
         /* Lado Izquierdo: Foto Principal 4K */
         .main-view {
@@ -283,77 +209,74 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-right: 1px solid #222;
+            border-bottom: 1px solid #222;
         }
-        .main-view img { max-width: 95%; max-height: 95%; object-fit: contain; }
+        @media (min-width: 768px) { .main-view { border-bottom: none; border-right: 1px solid #222; flex: 1.2; } }
+
+        .main-view img { max-width: 90%; max-height: 70vh; object-fit: contain; }
 
         /* Lado Derecho: Galería de detalles */
         .detail-view {
-            padding: 50px;
-            overflow-y: auto;
+            padding: clamp(20px, 4vw, 40px);
+            flex: 1;
+            overflow-y: auto; /* Scroll para detalles */
         }
-        .detail-view h2 { border-bottom: 2px solid var(--neon-blue); padding-bottom: 15px; margin-bottom: 25px; text-transform: uppercase;}
+        .detail-view h2 { border-bottom: 2px solid var(--neon-blue); padding-bottom: 15px; margin-bottom: 25px; text-transform: uppercase; font-size: clamp(1.1rem, 3vw, 1.4rem);}
 
         .detail-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Adaptable */
+            gap: 15px;
             margin-top: 20px;
         }
-        .detail-item { background: #1a1a1a; padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #333;}
-        .detail-item img { width: 100%; border-radius: 5px; margin-bottom: 10px;}
-        .detail-item p { font-size: 0.75rem; color: #aaa; text-transform: uppercase; margin: 0;}
+        .detail-item { background: #1a1a1a; padding: 10px; border-radius: 10px; text-align: center; border: 1px solid #333;}
+        .detail-item img { width: 100%; border-radius: 5px; margin-bottom: 5px;}
+        .detail-item p { font-size: 0.7rem; color: #aaa; text-transform: uppercase; margin: 0;}
     </style>
 </head>
 <body>
 
-    <div class="brand-logo">IMPERIUM STAR</div>
-    <div class="collection-title">LUXURY STREETWEAR</div>
+    <div class="brand-header">
+        <h1 class="brand-logo">IMPERIUM STAR</h1>
+        <div class="collection-title">ELITE STREETWEAR DROP // 2026</div>
+    </div>
 
-    <div class="catalog-container" id="catalog-container">
+    <div class="catalog-container">
 
-        <div class="product-card" data-tilt>
-            <div class="img-container">
-                <img src="FONDO.PNG" alt="Essentials Negra"> </div>
-            <div class="product-info">
-                <div class="brand-model">MODELO: ESSENTIALS NEGRA</div>
-                <div class="model-variant">| MÍNIMO & ESENCIAL |</div>
-                <button class="view-btn" onclick="openModal('modal1')">VER DROP</button>
-            </div>
+        <div class="product-card">
+            <img src="CATALOGO.jpeg" alt="Essentials Negra"> <div class="brand-model">ESSENTIALS NEGRA</div>
+            <div style="color:#666; font-size:0.8rem; margin-top:5px;">| MÍNIMO & ESENCIAL |</div>
+            <button class="view-btn" onclick="openModal('m1')">VER DROP</button>
         </div>
 
-        <div class="product-card" data-tilt>
-            <div class="img-container">
-                <img src="hellstar_frente.jpg" alt="Hellstar Negra"> </div>
-            <div class="product-info">
-                <div class="brand-model">MODELO: HELLSTAR NEGRA</div>
-                <div class="model-variant">| PINK LOGO (HYPE DROP) |</div>
-                <button class="view-btn" onclick="openModal('modal2')">VER DROP</button>
-            </div>
+        <div class="product-card">
+            <img src="CATALOGO.jpeg" alt="Hellstar Negra"> <div class="brand-model">HELLSTAR NEGRA</div>
+            <div style="color:#666; font-size:0.8rem; margin-top:5px;">| PINK LOGO (HYPE DROP) |</div>
+            <button class="view-btn" onclick="openModal('m2')">VER DROP</button>
         </div>
 
-        </div>
+    </div>
 
-    <div id="modal1" class="modal">
+    <div id="m1" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal1')">&times;</span>
+            <span class="close-btn" onclick="closeModal('m1')">&times;</span>
             <div class="main-view">
-                <img src="essentials_frente.jpg" alt="Vista Frontal Essentials">
-            </div>
+                <img src="CATALOGO.jpeg" alt="Essentials Frente"> </div>
             <div class="detail-view">
                 <h2>ESSENTIALS FEAR OF GOD</h2>
                 <p>Colección Mínimo y Esencial. Algodón Premium.</p>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <img src="detalle_print.jpg" alt="Print Essentials">
-                        <p>DETALLE IMPRESIÓN</p>
+                        <img src="CATALOGO.jpeg" alt="Essentials Print"> <p>DETALLE IMPRESIÓN</p>
                     </div>
                     <div class="detail-item">
-                        <img src="etiqueta_essentials.jpg" alt="Etiqueta Essentials">
-                        <p>ETIQUETA INTERNA</p>
+                        <img src="CATALOGO.jpeg" alt="Essentials Etiqueta"> <p>ETIQUETA INTERNA</p>
                     </div>
                 </div>
-                <button class="view-btn" style="width:100%; margin-top:40px;">ORDENAR POR WHATSAPP →</button>
+                <div style="margin-top: 30px; background: #222; padding: 15px; border-radius: 10px;">
+                    <p style="margin:0; font-size: 1.2rem; color: var(--neon-blue);">$799 MXN</p>
+                </div>
+                <button class="view-btn" style="background:#fff; color:#000; margin-top:30px;" onclick="pedir('Essentials Negra')">PEDIR POR WHATSAPP →</button>
             </div>
         </div>
     </div>
@@ -362,57 +285,36 @@
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('modal2')">&times;</span>
             <div class="main-view">
-                <img src="hellstar_frente.jpg" alt="Vista Frontal Hellstar">
-            </div>
+                <img src="CATALOGO.jpeg" alt="Hellstar Frente"> </div>
             <div class="detail-view">
                 <h2>HELLSTAR NEGRA (PINK LOGO)</h2>
                 <p>Gráficos de alta densidad. Corte Oversize.</p>
                 <div class="detail-grid">
                     <div class="detail-item">
-                        <img src="back_logo.jpg" alt="Espalda Hellstar">
-                        <p>VISTA TRASERA</p>
+                        <img src="CATALOGO.jpeg" alt="Hellstar Espalda"> <p>VISTA TRASERA</p>
                     </div>
                     <div class="detail-item">
-                        <img src="etiqueta_autenticidad.jpg" alt="Etiqueta Autenticidad">
-                        <p>AUTENTICIDAD</p>
+                        <img src="CATALOGO.jpeg" alt="Hellstar Etiqueta"> <p>AUTENTICIDAD</p>
                     </div>
                 </div>
-                <button class="view-btn" style="width:100%; margin-top:40px;">ORDENAR POR WHATSAPP →</button>
+                <div style="margin-top: 30px; background: #222; padding: 15px; border-radius: 10px;">
+                    <p style="margin:0; font-size: 1.2rem; color: var(--neon-blue);">$950 MXN</p>
+                </div>
+                <button class="view-btn" style="background:#fff; color:#000; margin-top:30px;" onclick="pedir('Hellstar Negra Pink')">PEDIR POR WHATSAPP →</button>
             </div>
         </div>
     </div>
 
     <script>
-        /* 1. EFECTO DE PARALAJE 3D EN TARJETAS (JS Light) */
-        const cards = document.querySelectorAll('.product-card');
+        // Función para el WhatsApp (Reemplaza con tu número real)
+        function pedir(producto) {
+            const tel = "521234567890"; // CAMBIA POR TU NÚMERO (ej: 521XXXXXXXXXX para MX)
+            const msg = `Hola Imperium Star, me interesa el drop: ${producto}. ¿Tienen disponibilidad?`;
+            window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
 
-        cards.forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const xc = rect.width / 2;
-                const yc = rect.height / 2;
-                const dx = x - xc;
-                const dy = y - yc;
-                
-                // Efecto de inclinación 3D (Tilt)
-                card.style.transform = `perspective(1000px) rotateX(${dy / -10}deg) rotateY(${dx / 10}deg)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-            });
-        });
-
-        /* 2. APARICIÓN ESCALONADA DE TARJETAS (Staggered Animations) */
-        const cardsToAnimate = document.querySelectorAll('.product-card');
-        cardsToAnimate.forEach((card, index) => {
-            card.style.animationDelay = `${index * 0.15}s`; /* Retraso progresivo */
-        });
-
-        /* 3. FUNCIONES DE MODAL (VENTANA EMERGENTE) */
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        /* FUNCIONES DE MODAL (VENTANA EMERGENTE) */
+        function openModal(id) { document.getElementById(id).style.display = 'block'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         
         // Cerrar al hacer clic fuera del cuadro
