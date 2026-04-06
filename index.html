@@ -3,336 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>IMPERIUM STAR | ELITE HYPE DROP</title>
+    <title>Imperium Star - Elite Hype Drop (4K Mobile)</title>
     <style>
-        /* --- VARIABLES MAESTRAS TECH --- */
+        /* --- VARIABLES DE DISEÑO (FUTURISTAS) --- */
         :root {
             --neon-blue: #00f2fe;
-            --neon-purple: #7000ff;
-            --glass-bg: rgba(0, 0, 0, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(0, 0, 0, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.08);
             --font-main: 'Arial Black', Gadget, sans-serif;
-            --shadow-tech: 0 0 20px rgba(0, 242, 254, 0.3);
+            --text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px var(--neon-blue);
         }
 
-        /* --- CONFIGURACIÓN BASE --- */
+        /* --- ESTILOS MAESTROS --- */
         body {
-            background: #000 url('fondo.png') center/cover fixed;
+            background-color: #000;
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.95)), url('fondo.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: #fff;
             font-family: var(--font-main);
             margin: 0;
-            padding: 0;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Scrollbar personalizada */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 10px; }
-
-        /* --- HEADER CON ANIMACIÓN GLITCH 4K --- */
-        .brand-header {
-            padding: clamp(60px, 15vw, 100px) 20px;
-            text-align: center;
-            position: relative;
-        }
+        .brand-header { text-align: center; padding: clamp(40px, 10vw, 80px) 20px; }
 
         .brand-logo {
-            font-size: clamp(2.8rem, 10vw, 6rem);
-            letter-spacing: clamp(8px, 2.5vw, 20px);
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            letter-spacing: clamp(5px, 2vw, 15px);
             text-transform: uppercase;
-            position: relative;
-            display: inline-block;
-            text-shadow: 0 0 15px var(--neon-blue);
-            animation: mainFadeIn 1s ease forwards;
+            text-shadow: var(--text-shadow);
+            animation: logoGlitch 1.5s infinite alternate, neonPulse 3s infinite alternate;
+            margin: 0;
         }
 
-        /* Efecto Glitch constante sutil */
-        .brand-logo::before, .brand-logo::after {
-            content: 'IMPERIUM STAR';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.8;
+        @keyframes logoGlitch {
+            0% { transform: translate(2px, 2px) skew(2deg); opacity: 0.9; }
+            100% { transform: translate(-2px, -2px) skew(-2deg); opacity: 1; }
         }
 
-        .brand-logo::before {
-            color: #ff00c1;
-            z-index: -1;
-            animation: glitchEffect 3s infinite;
+        @keyframes neonPulse {
+            0% { text-shadow: var(--text-shadow); }
+            100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue); }
         }
 
-        .brand-logo::after {
-            color: var(--neon-blue);
-            z-index: -2;
-            animation: glitchEffect 2s infinite reverse;
-        }
-
-        @keyframes glitchEffect {
-            0% { transform: translate(0); }
-            20% { transform: translate(-3px, 2px); }
-            40% { transform: translate(-3px, -2px); }
-            60% { transform: translate(3px, 2px); }
-            80% { transform: translate(3px, -2px); }
-            100% { transform: translate(0); }
-        }
-
-        .collection-subtitle {
-            font-size: clamp(0.7rem, 2vw, 1rem);
-            color: #666;
+        .collection-title {
+            font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+            color: #aaa;
             letter-spacing: 5px;
-            margin-top: 20px;
             text-transform: uppercase;
-            animation: fadeIn 2s ease forwards;
+            margin-top: 15px;
         }
 
-        /* --- GRID DE PRODUCTOS --- */
+        /* --- REJILLA DE PRODUCTOS --- */
         .catalog-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 columnas fijas en móvil */
-            gap: 15px;
-            padding: 20px;
+            width: 90%;
             max-width: 1400px;
-            margin: 0 auto 100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding-bottom: 100px;
         }
 
-        @media (min-width: 1024px) {
-            .catalog-container { grid-template-columns: repeat(4, 1fr); gap: 30px; }
-        }
-
-        /* --- TARJETA DE PRODUCTO "ELITE" --- */
         .product-card {
             background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            padding: 15px;
+            padding: 25px;
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
+            transition: 0.3s ease;
         }
 
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(0,242,254,0.1) 0%, transparent 70%);
-            opacity: 0; transition: 0.5s;
-        }
+        .product-card:hover { border-color: var(--neon-blue); transform: translateY(-5px); }
 
-        .product-card:hover::before { opacity: 1; }
-        .product-card:hover { border-color: var(--neon-blue); transform: translateY(-10px); box-shadow: var(--shadow-tech); }
+        .product-card img { width: 100%; border-radius: 10px; margin-bottom: 20px; }
 
-        .product-card img {
-            width: 100%;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            transition: 0.5s;
-        }
-
-        .brand-model {
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        .tag-hype {
-            font-size: 0.6rem;
-            color: var(--neon-blue);
-            background: rgba(0,242,254,0.1);
-            padding: 4px 8px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
+        .brand-model { font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; }
 
         .view-btn {
+            display: block;
             width: 100%;
-            padding: 12px;
+            margin-top: 20px;
+            padding: 15px;
             background: transparent;
-            border: 1px solid #fff;
+            border: 2px solid #fff;
             color: #fff;
-            border-radius: 10px;
             font-family: var(--font-main);
-            font-size: 0.7rem;
+            text-transform: uppercase;
+            border-radius: 10px;
             cursor: pointer;
             transition: 0.3s;
-            text-transform: uppercase;
         }
 
-        .product-card:hover .view-btn { background: #fff; color: #000; }
+        .view-btn:hover { background: #fff; color: #000; box-shadow: 0 0 20px #fff; }
 
-        /* --- MODAL PERRÓN (FULL ANIMATED) --- */
+        /* --- MODALES --- */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95);
-            z-index: 10000;
+            z-index: 9999;
             overflow-y: auto;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(15px);
         }
 
         .modal-content {
-            background: #000;
-            width: 92%;
+            background: #111;
+            margin: 5% auto;
+            width: 90%;
             max-width: 1000px;
-            margin: 40px auto;
-            border-radius: 30px;
-            border: 1px solid #222;
+            border-radius: 20px;
+            border: 1px solid var(--neon-blue);
             display: flex;
             flex-direction: column;
             position: relative;
-            animation: modalSpring 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            overflow: hidden;
         }
 
-        @media (min-width: 768px) { .modal-content { flex-direction: row; min-height: 600px; } }
-
-        @keyframes modalSpring {
-            0% { transform: scale(0.5) translateY(100px); opacity: 0; }
-            100% { transform: scale(1) translateY(0); opacity: 1; }
-        }
+        @media (min-width: 768px) { .modal-content { flex-direction: row; } }
 
         .close-btn {
             position: absolute;
-            top: 20px; right: 25px;
-            font-size: 2.5rem; color: #fff; cursor: pointer; z-index: 100;
-            transition: 0.3s;
-        }
-        .close-btn:hover { color: var(--neon-blue); transform: rotate(90deg); }
-
-        /* Vistas del Modal */
-        .main-view {
-            flex: 1.2;
-            background: #0a0a0a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 30px;
-            border-bottom: 1px solid #222;
-        }
-        @media (min-width: 768px) { .main-view { border-bottom: none; border-right: 1px solid #222; } }
-
-        .main-view img { 
-            max-width: 100%; 
-            max-height: 50vh; 
-            object-fit: contain; 
-            animation: imgReveal 1s ease;
+            top: 10px; right: 20px;
+            font-size: 3rem; color: #fff; cursor: pointer; z-index: 100;
         }
 
-        @keyframes imgReveal { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .main-view { background: #000; flex: 1.2; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .main-view img { max-width: 100%; max-height: 60vh; object-fit: contain; }
 
-        .detail-view {
-            flex: 1;
-            padding: clamp(25px, 5vw, 45px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+        .detail-view { padding: 30px; flex: 1; }
+        .detail-view h2 { border-bottom: 2px solid var(--neon-blue); padding-bottom: 10px; }
 
-        .detail-view h2 {
-            font-size: 1.8rem;
-            margin: 0 0 10px 0;
-            text-shadow: 0 0 10px var(--neon-blue);
-        }
-
-        .price-box {
-            font-size: 2rem;
-            color: var(--neon-blue);
-            margin: 20px 0;
-            font-weight: bold;
-        }
-
-        .buy-btn {
-            background: #fff;
-            color: #000;
-            padding: 20px;
-            border-radius: 15px;
-            border: none;
-            font-family: var(--font-main);
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
-        }
-
-        .buy-btn:hover { transform: scale(1.03); box-shadow: 0 15px 30px rgba(255,255,255,0.2); }
-
-        /* Galería de miniaturas abajo */
-        .detail-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .detail-item {
-            background: #111;
-            padding: 10px;
-            border-radius: 12px;
-            border: 1px solid #222;
-        }
-        .detail-item img { width: 100%; border-radius: 8px; }
-
-        /* Auxiliares */
-        .stop-scroll { overflow: hidden; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes mainFadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .detail-item { background: #1a1a1a; padding: 10px; border-radius: 10px; text-align: center; }
+        .detail-item img { width: 100%; border-radius: 5px; }
+        .detail-item p { font-size: 0.7rem; color: #aaa; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-    <header class="brand-header">
+    <div class="brand-header">
         <h1 class="brand-logo">IMPERIUM STAR</h1>
-        <div class="collection-subtitle">DROP ELITE // LEÓN GTO // 2026</div>
-    </header>
+        <div class="collection-title">ELITE STREETWEAR DROP // 2026</div>
+    </div>
 
     <div class="catalog-container">
         <div class="product-card">
-            <img src="gucci.jpeg" alt="Gucci">
-            <span class="brand-model">GUCCI RED EDITION</span>
-            <span class="tag-hype">LIMITED STOCK</span>
-            <button class="view-btn" onclick="openModal('m1')">DETALLES DROP</button>
+            <img src="gucci.jpeg"> <div class="brand-model">GUCCI</div>
+            <button class="view-btn" onclick="openModal('m1')">VER PLAYERA</button>
         </div>
-
         <div class="product-card">
-            <img src="HELLSTAR.jpeg" alt="Hellstar">
-            <span class="brand-model">HELLSTAR FUTURE</span>
-            <span class="tag-hype">NFC AUTHENTIC</span>
-            <button class="view-btn" onclick="openModal('m2')">DETALLES DROP</button>
+            <img src="HELLSTAR.jpeg"> <div class="brand-model">HELLSTAR FUTURE</div>
+            <button class="view-btn" onclick="openModal('m2')">VER PLAYERA</button>
         </div>
-
         <div class="product-card">
-            <img src="GOODSP.jpeg" alt="Goodspeed">
-            <span class="brand-model">GOODSPEED</span>
-            <span class="tag-hype">PREMIUM OVERSIZE</span>
-            <button class="view-btn" onclick="openModal('m3')">DETALLES DROP</button>
+            <img src="GOODSP.jpeg"> <div class="brand-model">GOODSPEED</div>
+            <button class="view-btn" onclick="openModal('m3')">VER PLAYERA</button>
         </div>
-
         <div class="product-card">
-            <img src="LV.jpeg" alt="Louis Vuitton">
-            <span class="brand-model">LV WHITE DREAM</span>
-            <span class="tag-hype">LUXURY CUT</span>
-            <button class="view-btn" onclick="openModal('m4')">DETALLES DROP</button>
+            <img src="LV.jpeg"> <div class="brand-model">LOUIS VUITTON</div>
+            <button class="view-btn" onclick="openModal('m4')">VER PLAYERA</button>
         </div>
-        
         <div class="product-card">
-            <img src="ESENTIALS.jpeg" alt="Essentials">
-            <span class="brand-model">ESSENTIALS NOIR</span>
-            <span class="tag-hype">OG QUALITY</span>
-            <button class="view-btn" onclick="openModal('m5')">DETALLES DROP</button>
+            <img src="ESENTIALS.jpeg"> <div class="brand-model">ESSENTIALS</div>
+            <button class="view-btn" onclick="openModal('m5')">VER PLAYERA</button>
         </div>
-
         <div class="product-card">
-            <img src="AM.jpeg" alt="Amiri">
-            <span class="brand-model">AMIRI WHITE</span>
-            <span class="tag-hype">STREET VIBES</span>
-            <button class="view-btn" onclick="openModal('m6')">DETALLES DROP</button>
+            <img src="AM.jpeg"> <div class="brand-model">AMIRI WHITE</div>
+            <button class="view-btn" onclick="openModal('m6')">VER PLAYERA</button>
+        </div>
+        <div class="product-card">
+            <img src="AMI.jpeg"> <div class="brand-model">AMIRI BLUE</div>
+            <button class="view-btn" onclick="openModal('m7')">VER PLAYERA</button>
         </div>
     </div>
 
@@ -341,13 +190,11 @@
             <span class="close-btn" onclick="closeModal('m1')">&times;</span>
             <div class="main-view"><img src="gucc7.jpeg"></div>
             <div class="detail-view">
-                <h2>GUCCI ELITE RED</h2>
-                <p style="color: #888;">Corte italiano, etiquetas originales. Un drop diseñado para resaltar en cualquier lugar de León.</p>
-                <div class="price-box">$749 MXN</div>
-                <button class="buy-btn" onclick="pedir('GUCCI RED')">PEDIR POR WHATSAPP →</button>
+                <h2>GUCCI ELITE</h2>
                 <div class="detail-grid">
-                    <div class="detail-item"><img src="bolsagucci.jpeg"></div>
+                    <div class="detail-item"><img src="bolsagucci.jpeg"><p>ACCESORIOS</p></div>
                 </div>
+                <button class="view-btn" onclick="pedir('GUCCI RED')">PEDIR WHATSAPP</button>
             </div>
         </div>
     </div>
@@ -358,38 +205,104 @@
             <div class="main-view"><img src="HELLSTARF.jpeg"></div>
             <div class="detail-view">
                 <h2>HELLSTAR FUTURE</h2>
-                <p style="color: #888;">Gráficos 4K de alta densidad. Incluye chip NFC de autenticidad. El hype real.</p>
-                <div class="price-box">$799 MXN</div>
-                <button class="buy-btn" onclick="pedir('HELLSTAR FUTURE')">PEDIR POR WHATSAPP →</button>
                 <div class="detail-grid">
-                    <div class="detail-item"><img src="HELLSTART.jpeg"></div>
-                    <div class="detail-item"><img src="NFC.jpeg"></div>
+                    <div class="detail-item"><img src="HELLSTART.jpeg"><p>BACK VIEW</p></div>
+                    <div class="detail-item"><img src="NFC.jpeg"><p>NFC TAG</p></div>
                 </div>
+                <button class="view-btn" onclick="pedir('HELLSTAR FUTURE')">PEDIR WHATSAPP</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="m3" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('m3')">&times;</span>
+            <div class="main-view"><img src="GOOD_SPEED.jpeg"></div>
+            <div class="detail-view">
+                <h2>GOOD SPEED</h2>
+                <div class="detail-grid">
+                    <div class="detail-item"><img src="GOOD_SPEEDT.jpeg"><p>BACK</p></div>
+                    <div class="detail-item"><img src="ETIQUETAG.jpeg"><p>TAG</p></div>
+                </div>
+                <button class="view-btn" onclick="pedir('GOOD SPEED')">PEDIR WHATSAPP</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="m4" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('m4')">&times;</span>
+            <div class="main-view"><img src="LV1.jpeg"></div>
+            <div class="detail-view">
+                <h2>LOUIS VUITTON</h2>
+                <div class="detail-grid">
+                    <div class="detail-item"><img src="LV2.jpeg"><p>BACK</p></div>
+                    <div class="detail-item"><img src="LV3.jpeg"><p>DETAILS</p></div>
+                </div>
+                <button class="view-btn" onclick="pedir('LV WHITE')">PEDIR WHATSAPP</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="m5" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('m5')">&times;</span>
+            <div class="main-view"><img src="ES1.jpeg"></div>
+            <div class="detail-view">
+                <h2>ESSENTIALS BLACK</h2>
+                <div class="detail-grid">
+                    <div class="detail-item"><img src="ES2.jpeg"><p>PACKAGING</p></div>
+                </div>
+                <button class="view-btn" onclick="pedir('ESSENTIALS BLACK')">PEDIR WHATSAPP</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="m6" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('m6')">&times;</span>
+            <div class="main-view"><img src="AM1.jpeg"></div>
+            <div class="detail-view">
+                <h2>AMIRI LUXE WHITE</h2>
+                <div class="detail-grid">
+                    <div class="detail-item"><img src="AM2.jpeg"><p>BACK</p></div>
+                    <div class="detail-item"><img src="AM3.jpeg"><p>TAGS</p></div>
+                </div>
+                <button class="view-btn" onclick="pedir('AMIRI WHITE')">PEDIR WHATSAPP</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="m7" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('m7')">&times;</span>
+            <div class="main-view"><img src="A.jpeg"></div>
+            <div class="detail-view">
+                <h2>AMIRI OCEAN BLUE</h2>
+                <p>CALIDAD OG LIMITADA</p>
+                <button class="view-btn" onclick="pedir('AMIRI BLUE')">PEDIR WHATSAPP</button>
             </div>
         </div>
     </div>
 
     <script>
-        function pedir(producto) {
-            const tel = "524792306863"; 
-            const msg = `Hola Imperium Star, quiero el drop: ${producto}. ¿Está disponible?`;
-            window.open(`https://api.whatsapp.com/send?phone=${tel}&text=${encodeURIComponent(msg)}`, '_blank');
+        function openModal(id) {
+            document.getElementById(id).style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Evita scroll atrás
         }
-
-        function openModal(id) { 
-            document.getElementById(id).style.display = 'block'; 
-            document.body.classList.add('stop-scroll');
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
-        
-        function closeModal(id) { 
-            document.getElementById(id).style.display = 'none'; 
-            document.body.classList.remove('stop-scroll');
+        function pedir(prod) {
+            const tel = "524792306863";
+            const msg = `Qué onda Imperium Star, me interesa la playera: ${prod}. Tienen disponibilidad?`;
+            window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, '_blank');
         }
-
-        window.onclick = function(e) {
-            if (e.target.className === 'modal') {
-                e.target.style.display = 'none';
-                document.body.classList.remove('stop-scroll');
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
             }
         }
     </script>
