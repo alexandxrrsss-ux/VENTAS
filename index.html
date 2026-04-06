@@ -3,343 +3,368 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Imperium Star - Elite Hype Drop (4K Mobile)</title>
-    <link rel="preconnect" href="https://wa.me">
+    <title>IMPERIUM STAR | ELITE HYPE DROP</title>
     <style>
-        /* --- VARIABLES DE DISEÑO --- */
+        /* --- VARIABLES MAESTRAS TECH --- */
         :root {
             --neon-blue: #00f2fe;
-            --glass-bg: rgba(0, 0, 0, 0.9);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --neon-purple: #7000ff;
+            --glass-bg: rgba(0, 0, 0, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.1);
             --font-main: 'Arial Black', Gadget, sans-serif;
-            --text-shadow: 0 0 10px #fff, 0 0 20px var(--neon-blue);
+            --shadow-tech: 0 0 20px rgba(0, 242, 254, 0.3);
         }
 
-        /* --- OPTIMIZACIÓN DE RENDIMIENTO --- */
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
+        /* --- CONFIGURACIÓN BASE --- */
         body {
-            background-color: #000;
-            /* Usamos una versión más ligera del degradado para que el scroll no se trabe */
-            background-image: linear-gradient(to bottom, rgba(0,0,0,0.8), #000), url('fondo.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: #000 url('fondo.png') center/cover fixed;
             color: #fff;
             font-family: var(--font-main);
             margin: 0;
+            padding: 0;
             overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            /* Mejora el suavizado de fuentes en móvil */
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- LOGO RESPONSIVE --- */
-        .brand-header { text-align: center; padding: 30px 15px; width: 100%; }
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: var(--neon-blue); border-radius: 10px; }
+
+        /* --- HEADER CON ANIMACIÓN GLITCH 4K --- */
+        .brand-header {
+            padding: clamp(60px, 15vw, 100px) 20px;
+            text-align: center;
+            position: relative;
+        }
 
         .brand-logo {
-            font-size: clamp(2rem, 10vw, 4.5rem);
-            letter-spacing: clamp(3px, 1.5vw, 12px);
+            font-size: clamp(2.8rem, 10vw, 6rem);
+            letter-spacing: clamp(8px, 2.5vw, 20px);
             text-transform: uppercase;
-            color: #fff;
-            text-shadow: var(--text-shadow);
-            animation: logoGlitch 2s infinite alternate;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 15px var(--neon-blue);
+            animation: mainFadeIn 1s ease forwards;
         }
 
-        @keyframes logoGlitch {
-            0%, 100% { transform: translate(0); }
-            33% { transform: translate(1px, -1px); opacity: 0.9; }
-            66% { transform: translate(-1px, 1px); }
+        /* Efecto Glitch constante sutil */
+        .brand-logo::before, .brand-logo::after {
+            content: 'IMPERIUM STAR';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.8;
         }
 
-        .collection-title {
-            font-size: 0.8rem;
-            color: #888;
-            letter-spacing: 3px;
-            margin-top: 10px;
+        .brand-logo::before {
+            color: #ff00c1;
+            z-index: -1;
+            animation: glitchEffect 3s infinite;
+        }
+
+        .brand-logo::after {
+            color: var(--neon-blue);
+            z-index: -2;
+            animation: glitchEffect 2s infinite reverse;
+        }
+
+        @keyframes glitchEffect {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 2px); }
+            40% { transform: translate(-3px, -2px); }
+            60% { transform: translate(3px, 2px); }
+            80% { transform: translate(3px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .collection-subtitle {
+            font-size: clamp(0.7rem, 2vw, 1rem);
+            color: #666;
+            letter-spacing: 5px;
+            margin-top: 20px;
             text-transform: uppercase;
+            animation: fadeIn 2s ease forwards;
         }
 
-        /* --- REJILLA OPTIMIZADA --- */
+        /* --- GRID DE PRODUCTOS --- */
         .catalog-container {
-            width: 95%;
-            max-width: 1300px;
             display: grid;
-            /* En móviles pequeños se ve 1 columna, en medianos 2 y en PC 3 o 4 */
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            grid-template-columns: repeat(2, 1fr); /* 2 columnas fijas en móvil */
             gap: 15px;
-            padding: 20px 0 100px 0;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto 100px;
         }
 
-        @media (min-width: 600px) {
-            .catalog-container { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        @media (min-width: 1024px) {
+            .catalog-container { grid-template-columns: repeat(4, 1fr); gap: 30px; }
         }
 
-        /* --- TARJETAS MÁS LIGERAS --- */
+        /* --- TARJETA DE PRODUCTO "ELITE" --- */
         .product-card {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 15px;
             text-align: center;
-            transition: transform 0.2s ease;
-            will-change: transform; /* Ayuda a la tarjeta gráfica del móvil */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
         }
 
-        .product-card img { 
-            width: 100%; 
-            aspect-ratio: 1/1; 
-            object-fit: cover; 
-            border-radius: 10px; 
-            margin-bottom: 12px;
-            background: #111; /* Color de carga mientras baja la imagen */
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0,242,254,0.1) 0%, transparent 70%);
+            opacity: 0; transition: 0.5s;
+        }
+
+        .product-card:hover::before { opacity: 1; }
+        .product-card:hover { border-color: var(--neon-blue); transform: translateY(-10px); box-shadow: var(--shadow-tech); }
+
+        .product-card img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            transition: 0.5s;
         }
 
         .brand-model {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             letter-spacing: 1px;
-            color: #fff;
+            margin-bottom: 5px;
             display: block;
-            min-height: 2.5em; /* Alinea los títulos aunque unos sean más largos */
+        }
+
+        .tag-hype {
+            font-size: 0.6rem;
+            color: var(--neon-blue);
+            background: rgba(0,242,254,0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 15px;
         }
 
         .view-btn {
-            display: block;
             width: 100%;
-            margin-top: 15px;
             padding: 12px;
             background: transparent;
-            border: 1.5px solid #fff;
+            border: 1px solid #fff;
             color: #fff;
-            font-size: 0.75rem;
+            border-radius: 10px;
+            font-family: var(--font-main);
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.3s;
             text-transform: uppercase;
-            border-radius: 8px;
-            font-weight: bold;
         }
 
-        /* --- MODAL OPTIMIZADO PARA TOUCH --- */
+        .product-card:hover .view-btn { background: #fff; color: #000; }
+
+        /* --- MODAL PERRÓN (FULL ANIMATED) --- */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95);
-            z-index: 2000;
+            z-index: 10000;
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch; /* Scroll suave en iPhone */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
         }
 
         .modal-content {
-            background: #0a0a0a;
-            margin: 10px auto;
-            width: 95%;
+            background: #000;
+            width: 92%;
             max-width: 1000px;
-            border-radius: 15px;
-            border: 1px solid #333;
+            margin: 40px auto;
+            border-radius: 30px;
+            border: 1px solid #222;
             display: flex;
             flex-direction: column;
             position: relative;
+            animation: modalSpring 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
         }
 
-        @media (min-width: 768px) { .modal-content { flex-direction: row; margin: 40px auto; } }
+        @media (min-width: 768px) { .modal-content { flex-direction: row; min-height: 600px; } }
+
+        @keyframes modalSpring {
+            0% { transform: scale(0.5) translateY(100px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
 
         .close-btn {
             position: absolute;
-            top: 10px; right: 15px;
-            font-size: 2.5rem;
-            color: #fff; z-index: 100;
+            top: 20px; right: 25px;
+            font-size: 2.5rem; color: #fff; cursor: pointer; z-index: 100;
+            transition: 0.3s;
+        }
+        .close-btn:hover { color: var(--neon-blue); transform: rotate(90deg); }
+
+        /* Vistas del Modal */
+        .main-view {
+            flex: 1.2;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            border-bottom: 1px solid #222;
+        }
+        @media (min-width: 768px) { .main-view { border-bottom: none; border-right: 1px solid #222; } }
+
+        .main-view img { 
+            max-width: 100%; 
+            max-height: 50vh; 
+            object-fit: contain; 
+            animation: imgReveal 1s ease;
         }
 
-        .main-view { flex: 1.2; background: #000; display: flex; align-items: center; justify-content: center; min-height: 300px; }
-        .main-view img { max-width: 100%; max-height: 60vh; object-fit: contain; }
+        @keyframes imgReveal { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
 
-        .detail-view { padding: 25px; flex: 1; }
-        .detail-view h2 { font-size: 1.2rem; border-left: 3px solid var(--neon-blue); padding-left: 10px; margin-bottom: 15px; }
+        .detail-view {
+            flex: 1;
+            padding: clamp(25px, 5vw, 45px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
+        .detail-view h2 {
+            font-size: 1.8rem;
+            margin: 0 0 10px 0;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .price-box {
+            font-size: 2rem;
+            color: var(--neon-blue);
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .buy-btn {
+            background: #fff;
+            color: #000;
+            padding: 20px;
+            border-radius: 15px;
+            border: none;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+        }
+
+        .buy-btn:hover { transform: scale(1.03); box-shadow: 0 15px 30px rgba(255,255,255,0.2); }
+
+        /* Galería de miniaturas abajo */
         .detail-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 15px;
+            margin-top: 30px;
         }
 
-        .detail-item { background: #151515; padding: 8px; border-radius: 8px; }
-        .detail-item img { width: 100%; border-radius: 5px; }
-        .detail-item p { font-size: 0.6rem; color: #888; margin-top: 5px; }
-
-        .price-tag {
-            margin-top: 20px;
-            background: #1a1a1a;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
+        .detail-item {
+            background: #111;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #222;
         }
+        .detail-item img { width: 100%; border-radius: 8px; }
+
+        /* Auxiliares */
+        .stop-scroll { overflow: hidden; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes mainFadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
     </style>
 </head>
 <body>
 
-    <div class="brand-header">
+    <header class="brand-header">
         <h1 class="brand-logo">IMPERIUM STAR</h1>
-        <div class="collection-title">ELITE STREETWEAR // 2026</div>
-    </div>
+        <div class="collection-subtitle">DROP ELITE // LEÓN GTO // 2026</div>
+    </header>
 
     <div class="catalog-container">
         <div class="product-card">
-            <img src="gucci.jpeg" alt="Gucci" loading="lazy">
-            <div class="brand-model">GUCCI RED</div>
-            <div style="color:#666; font-size:0.7rem;">| MÍNIMO & ESENCIAL |</div>
-            <button class="view-btn" onclick="openModal('m1')">VER DETALLES</button>
+            <img src="gucci.jpeg" alt="Gucci">
+            <span class="brand-model">GUCCI RED EDITION</span>
+            <span class="tag-hype">LIMITED STOCK</span>
+            <button class="view-btn" onclick="openModal('m1')">DETALLES DROP</button>
         </div>
 
         <div class="product-card">
-            <img src="HELLSTAR.jpeg" alt="Hellstar" loading="lazy">
-            <div class="brand-model">HELLSTAR FUTURE</div>
-            <div style="color:#666; font-size:0.7rem;">| HYPE DROP |</div>
-            <button class="view-btn" onclick="openModal('modal2')">VER DETALLES</button>
+            <img src="HELLSTAR.jpeg" alt="Hellstar">
+            <span class="brand-model">HELLSTAR FUTURE</span>
+            <span class="tag-hype">NFC AUTHENTIC</span>
+            <button class="view-btn" onclick="openModal('m2')">DETALLES DROP</button>
         </div>
 
         <div class="product-card">
-            <img src="GOODSP.jpeg" alt="Goodspeed" loading="lazy">
-            <div class="brand-model">GOODSPEED</div>
-            <div style="color:#666; font-size:0.7rem;">| LIMITADA |</div>
-            <button class="view-btn" onclick="openModal('m3')">VER DETALLES</button>
+            <img src="GOODSP.jpeg" alt="Goodspeed">
+            <span class="brand-model">GOODSPEED</span>
+            <span class="tag-hype">PREMIUM OVERSIZE</span>
+            <button class="view-btn" onclick="openModal('m3')">DETALLES DROP</button>
         </div>
 
         <div class="product-card">
-            <img src="LV.jpeg" alt="LV" loading="lazy">
-            <div class="brand-model">LOUIS VUITTON</div>
-            <div style="color:#666; font-size:0.7rem;">| DISEÑADOR |</div>
-            <button class="view-btn" onclick="openModal('m4')">VER DETALLES</button>
+            <img src="LV.jpeg" alt="Louis Vuitton">
+            <span class="brand-model">LV WHITE DREAM</span>
+            <span class="tag-hype">LUXURY CUT</span>
+            <button class="view-btn" onclick="openModal('m4')">DETALLES DROP</button>
+        </div>
+        
+        <div class="product-card">
+            <img src="ESENTIALS.jpeg" alt="Essentials">
+            <span class="brand-model">ESSENTIALS NOIR</span>
+            <span class="tag-hype">OG QUALITY</span>
+            <button class="view-btn" onclick="openModal('m5')">DETALLES DROP</button>
         </div>
 
         <div class="product-card">
-            <img src="ESENTIALS.jpeg" alt="Essentials" loading="lazy">
-            <div class="brand-model">ESSENTIALS BLACK</div>
-            <button class="view-btn" onclick="openModal('m5')">VER DETALLES</button>
-        </div>
-
-        <div class="product-card">
-            <img src="AM.jpeg" alt="Amiri W" loading="lazy">
-            <div class="brand-model">AMIRI WHITE</div>
-            <button class="view-btn" onclick="openModal('m6')">VER DETALLES</button>
-        </div>
-
-        <div class="product-card">
-            <img src="AMI.jpeg" alt="Amiri B" loading="lazy">
-            <div class="brand-model">AMIRI BLUE</div>
-            <button class="view-btn" onclick="openModal('m7')">VER DETALLES</button>
+            <img src="AM.jpeg" alt="Amiri">
+            <span class="brand-model">AMIRI WHITE</span>
+            <span class="tag-hype">STREET VIBES</span>
+            <button class="view-btn" onclick="openModal('m6')">DETALLES DROP</button>
         </div>
     </div>
 
     <div id="m1" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('m1')">&times;</span>
-            <div class="main-view"><img src="gucc7.jpeg" alt="Frente"></div>
+            <div class="main-view"><img src="gucc7.jpeg"></div>
             <div class="detail-view">
-                <h2>GUCCI ELITE</h2>
-                <p>Calidad OG. Resalta en GTO.</p>
+                <h2>GUCCI ELITE RED</h2>
+                <p style="color: #888;">Corte italiano, etiquetas originales. Un drop diseñado para resaltar en cualquier lugar de León.</p>
+                <div class="price-box">$749 MXN</div>
+                <button class="buy-btn" onclick="pedir('GUCCI RED')">PEDIR POR WHATSAPP →</button>
                 <div class="detail-grid">
-                    <div class="detail-item"><img src="bolsagucci.jpeg" alt="Bolsa"><p>PACKAGING</p></div>
+                    <div class="detail-item"><img src="bolsagucci.jpeg"></div>
                 </div>
-                <div class="price-tag"><p style="margin:0; font-size: 1.3rem; color: var(--neon-blue);">$749 MXN</p></div>
-                <button class="view-btn" style="background:#fff; color:#000;" onclick="pedir('GUCCI ROJA')">WHATSAPP →</button>
             </div>
         </div>
     </div>
 
-    <div id="modal2" class="modal">
+    <div id="m2" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal2')">&times;</span>
-            <div class="main-view"><img src="HELLSTARF.jpeg" alt="Frente"></div>
+            <span class="close-btn" onclick="closeModal('m2')">&times;</span>
+            <div class="main-view"><img src="HELLSTARF.jpeg"></div>
             <div class="detail-view">
                 <h2>HELLSTAR FUTURE</h2>
-                <p>Corte Oversize. Alta densidad.</p>
+                <p style="color: #888;">Gráficos 4K de alta densidad. Incluye chip NFC de autenticidad. El hype real.</p>
+                <div class="price-box">$799 MXN</div>
+                <button class="buy-btn" onclick="pedir('HELLSTAR FUTURE')">PEDIR POR WHATSAPP →</button>
                 <div class="detail-grid">
-                    <div class="detail-item"><img src="HELLSTART.jpeg" alt="Espalda"><p>BACK LOGO</p></div>
-                    <div class="detail-item"><img src="NFC.jpeg" alt="NFC"><p>NFC TAG</p></div>
+                    <div class="detail-item"><img src="HELLSTART.jpeg"></div>
+                    <div class="detail-item"><img src="NFC.jpeg"></div>
                 </div>
-                <div class="price-tag"><p style="margin:0; font-size: 1.3rem; color: var(--neon-blue);">$799 MXN</p></div>
-                <button class="view-btn" style="background:#fff; color:#000;" onclick="pedir('Hellstar THE FUTURE')">WHATSAPP →</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="m3" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('m3')">&times;</span>
-            <div class="main-view"><img src="GOOD_SPEED.jpeg" alt="Frente"></div>
-            <div class="detail-view">
-                <h2>GOOD SPEED</h2>
-                <p>Diferénciate del resto.</p>
-                <div class="detail-grid">
-                    <div class="detail-item"><img src="GOOD_SPEEDT.jpeg" alt="Espalda"><p>BACK</p></div>
-                    <div class="detail-item"><img src="ETIQUETAG.jpeg" alt="Etiqueta"><p>OG TAGS</p></div>
-                </div>
-                <div class="price-tag"><p style="margin:0; font-size: 1.3rem; color: var(--neon-blue);">$799 MXN</p></div>
-                <button class="view-btn" style="background:#fff; color:#000;" onclick="pedir('GOOD SPEED')">WHATSAPP →</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="m4" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('m4')">&times;</span>
-            <div class="main-view"><img src="LV1.jpeg" alt="Frente"></div>
-            <div class="detail-view">
-                <h2>LOUIS VUITTON</h2>
-                <p>Viste exclusivo.</p>
-                <div class="detail-grid">
-                    <div class="detail-item"><img src="LV2.jpeg" alt="Espalda"><p>DETALLES</p></div>
-                    <div class="detail-item"><img src="LV3.jpeg" alt="Etiquetas"><p>ETIQUETAS</p></div>
-                </div>
-                <div class="price-tag"><p style="margin:0; font-size: 1.3rem; color: var(--neon-blue);">$749 MXN</p></div>
-                <button class="view-btn" style="background:#fff; color:#000;" onclick="pedir('LV WHITE')">WHATSAPP →</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="m5" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('m5')">&times;</span>
-            <div class="main-view"><img src="ES1.jpeg" alt="Frente"></div>
-            <div class="detail-view">
-                <h2>ESSENTIALS BLACK</h2>
-                <p>Perfecta para Total Black.</p>
-                <div class="detail-grid">
-                    <div class="detail-item"><img src="ES2.jpeg" alt="Bolsa"><p>BAG</p></div>
-                </div>
-                <div class="price-tag"><p style="margin:0; font-size: 1.3rem; color: var(--neon-blue);">$799 MXN</p></div>
-                <button class="view-btn" style="background:#fff; color:#000;" onclick="pedir('Essentials Negra')">WHATSAPP →</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="m6" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('m6')">&times;</span>
-            <div class="main-view"><img src="AM1.jpeg" alt="Frente"></div>
-            <div class="detail-view">
-                <h2>AMIRI WHITE</h2>
-                <p>Estilo Luxury Street.</p>
-                <div class="detail-grid">
-                    <div class="detail-item"><img src="AM2.jpeg" alt="Espalda"><p>BACK</p></div>
-                    <div class="detail-item"><img src="AM3.jpeg" alt="Etiquetas"><p>TAGS</p></div>
-                </div>
-                <div class="price-tag"><p style="margin:0; font-size: 1.3rem; color: var(--neon-blue);">$749 MXN</p></div>
-                <button class="view-btn" style="background:#fff; color:#000;" onclick="pedir('AMIRI WHITE')">WHATSAPP →</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="m7" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('m7')">&times;</span>
-            <div class="main-view"><img src="A.jpeg" alt="Frente"></div>
-            <div class="detail-view">
-                <h2>AMIRI BLUE</h2>
-                <p>Resalta en el antro.</p>
-                <div class="price-tag"><p style="margin:0; font-size: 1.3rem; color: var(--neon-blue);">$749 MXN</p></div>
-                <button class="view-btn" style="background:#fff; color:#000;" onclick="pedir('AMIRI BLUE')">WHATSAPP →</button>
             </div>
         </div>
     </div>
@@ -347,24 +372,24 @@
     <script>
         function pedir(producto) {
             const tel = "524792306863"; 
-            const msg = `Hola Imperium Star, me interesa el drop: ${producto}. ¿Tienen disponibilidad?`;
-            window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, '_blank');
+            const msg = `Hola Imperium Star, quiero el drop: ${producto}. ¿Está disponible?`;
+            window.open(`https://api.whatsapp.com/send?phone=${tel}&text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         function openModal(id) { 
             document.getElementById(id).style.display = 'block'; 
-            document.body.style.overflow = 'hidden'; // Evita scroll de fondo
+            document.body.classList.add('stop-scroll');
         }
         
         function closeModal(id) { 
             document.getElementById(id).style.display = 'none'; 
-            document.body.style.overflow = 'auto'; // Devuelve el scroll
+            document.body.classList.remove('stop-scroll');
         }
-        
+
         window.onclick = function(e) {
             if (e.target.className === 'modal') {
                 e.target.style.display = 'none';
-                document.body.style.overflow = 'auto';
+                document.body.classList.remove('stop-scroll');
             }
         }
     </script>
