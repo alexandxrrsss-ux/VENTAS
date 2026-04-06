@@ -7,17 +7,19 @@
     <style>
         /* --- VARIABLES DE DISEÑO (FUTURISTAS) --- */
         :root {
-            --neon-blue: #00f2fe; 
-            --glass-bg: rgba(0, 0, 0, 0.9); 
+            --neon-blue: #00f2fe;
+            --glass-bg: rgba(0, 0, 0, 0.9);
             --glass-border: rgba(255, 255, 255, 0.08);
             --font-main: 'Arial Black', Gadget, sans-serif;
             --text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px var(--neon-blue);
         }
 
-        /* --- ESTILOS MAESTROS --- */
+        /* --- ESTILOS MAESTROS (Negro Absoluto) --- */
         body {
             background-color: #000;
-            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.95)), url('fondo.png');
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.95)),
+                url('fondo.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -28,10 +30,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Mejora de renderizado */
+            /* Mejora de renderizado en móviles */
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
+        /* --- LOGO ANIMADO "GLITCH NEÓN" --- */
         .brand-header { text-align: center; padding: clamp(40px, 10vw, 80px) 20px; }
 
         .brand-logo {
@@ -42,18 +46,20 @@
             text-shadow: var(--text-shadow);
             animation: logoGlitch 1.5s infinite alternate, neonPulse 3s infinite alternate;
             margin: 0;
-            will-change: transform, opacity;
         }
 
         @keyframes logoGlitch {
-            0% { transform: translate(2px, 2px); opacity: 0.9; }
-            20% { transform: translate(-2px, -2px); opacity: 1; }
-            100% { transform: translate(1px, -1px); opacity: 0.9; }
+            0% { transform: translate(2px, 2px) skew(2deg); opacity: 0.9; }
+            20% { transform: translate(-2px, -2px) skew(-2deg); opacity: 1; }
+            40% { transform: translate(3px, 0px) skew(1deg); opacity: 0.8; }
+            60% { transform: translate(0px, 3px) skew(-1deg); opacity: 0.9; }
+            80% { transform: translate(-3px, -2px) skew(2deg); opacity: 1; }
+            100% { transform: translate(2px, -2px) skew(-2deg); opacity: 0.9; }
         }
 
         @keyframes neonPulse {
             0% { text-shadow: var(--text-shadow); }
-            100% { text-shadow: 0 0 5px #fff, 0 0 15px var(--neon-blue), 0 0 30px var(--neon-blue); }
+            100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-blue), 0 0 40px var(--neon-blue); }
         }
 
         .collection-title {
@@ -67,7 +73,7 @@
         }
 
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -76,9 +82,9 @@
             width: 90%;
             max-width: 1400px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            padding-bottom: 100px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding-bottom: clamp(60px, 10vw, 120px);
         }
 
         /* --- TARJETA DE PRODUCTO --- */
@@ -90,38 +96,30 @@
             border-radius: 20px;
             padding: 25px;
             text-align: center;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .product-card:hover { 
-            border-color: var(--neon-blue); 
-            transform: translateY(-5px);
-        }
-
-        /* Contenedor para que no salte el contenido mientras carga la imagen */
-        .img-container {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            background: #111;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
+        .product-card:hover { border-color: rgba(0, 242, 254, 0.4); transform: translateY(-5px); }
 
         .product-card img { 
             width: 100%; 
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            transition: 0.3s ease;
+            /* Optimización de carga */
+            content-visibility: auto;
         }
-
-        @media (hover: hover) { .product-card:hover img { transform: scale(1.08); } }
 
         .brand-model {
             font-size: clamp(1rem, 2vw, 1.1rem);
             letter-spacing: 2px;
             color: #ddd;
+            margin-bottom: 8px;
+            position: relative;
+            display: inline-block;
             text-transform: uppercase;
         }
 
@@ -139,54 +137,83 @@
             letter-spacing: 2px;
             border-radius: 10px;
             cursor: pointer;
-            transition: 0.3s ease;
+            transition: 0.3s;
+            position: relative;
+            z-index: 2;
         }
 
         .view-btn:hover { background: #fff; color: #000; box-shadow: 0 0 20px #fff; }
 
-        /* --- MODALES --- */
+        /* --- MODAL --- */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
+            background: rgba(0,0,0,0.98);
             z-index: 1000;
             overflow-y: auto;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: clamp(10px, 3vw, 30px);
+            box-sizing: border-box;
         }
 
         .modal-content {
             background: #111;
-            margin: 40px auto;
-            width: 95%;
-            max-width: 1000px;
+            margin: 20px auto;
+            width: 100%;
+            max-width: 1100px;
+            min-height: 80vh;
             border-radius: 20px;
             border: 1px solid var(--neon-blue);
             display: flex;
             flex-direction: column;
             position: relative;
+            animation: modalContentAppear 0.4s ease-out;
+            overflow: hidden;
         }
 
         @media (min-width: 768px) { .modal-content { flex-direction: row; } }
 
+        @keyframes modalContentAppear { 
+            from { opacity: 0; transform: scale(0.95) translateY(20px); } 
+            to { opacity: 1; transform: scale(1) translateY(0); } 
+        }
+
         .close-btn {
             position: absolute;
-            top: 10px; right: 20px;
-            font-size: 2.5rem;
+            top: 15px; right: 20px;
+            font-size: clamp(2rem, 5vw, 2.5rem);
             color: #fff; cursor: pointer; z-index: 10;
         }
 
-        .main-view { flex: 1.2; padding: 20px; display: flex; align-items: center; justify-content: center; }
-        .main-view img { max-width: 100%; max-height: 60vh; border-radius: 10px; }
+        .main-view {
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #222;
+        }
+        @media (min-width: 768px) { .main-view { border-bottom: none; border-right: 1px solid #222; flex: 1.2; } }
 
-        .detail-view { flex: 1; padding: 30px; }
-        .detail-view h2 { border-bottom: 2px solid var(--neon-blue); padding-bottom: 10px; text-transform: uppercase; }
+        .main-view img { max-width: 90%; max-height: 70vh; object-fit: contain; }
 
-        .detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
-        .detail-item { background: #000; padding: 10px; border-radius: 10px; border: 1px solid #222; }
-        .detail-item img { width: 100%; border-radius: 5px; }
-        .detail-item p { font-size: 0.6rem; color: #666; margin-top: 5px; text-align: center; }
+        .detail-view {
+            padding: clamp(20px, 4vw, 40px);
+            flex: 1;
+            overflow-y: auto;
+        }
+        .detail-view h2 { border-bottom: 2px solid var(--neon-blue); padding-bottom: 15px; margin-bottom: 25px; text-transform: uppercase; font-size: clamp(1.1rem, 3vw, 1.4rem);}
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .detail-item { background: #1a1a1a; padding: 10px; border-radius: 10px; text-align: center; border: 1px solid #333;}
+        .detail-item img { width: 100%; border-radius: 5px; margin-bottom: 5px;}
+        .detail-item p { font-size: 0.7rem; color: #aaa; text-transform: uppercase; margin: 0;}
     </style>
 </head>
 <body>
@@ -197,70 +224,75 @@
     </div>
 
     <div class="catalog-container">
+
         <div class="product-card">
-            <div class="img-container"><img src="gucci.jpeg" alt="Gucci" loading="lazy"></div>
-            <div class="brand-model">GUCCI</div>
+            <img src="gucci.jpeg" alt="Essentials Negra" loading="lazy"> 
+            <div class="brand-model">GUCCI </div>
             <div style="color:#666; font-size:0.8rem; margin-top:5px;">| MÍNIMO & ESENCIAL |</div>
             <button class="view-btn" onclick="openModal('m1')">VER PLAYERA</button>
         </div>
 
         <div class="product-card">
-            <div class="img-container"><img src="HELLSTAR.jpeg" alt="Hellstar" loading="lazy"></div>
+            <img src="HELLSTAR.jpeg" alt="Hellstar Negra" loading="lazy"> 
             <div class="brand-model">HELLSTAR THE FUTURE</div>
             <div style="color:#666; font-size:0.8rem; margin-top:5px;">|HYPE DROP|</div>
             <button class="view-btn" onclick="openModal('modal2')">VER PLAYERA</button>
         </div>
 
         <div class="product-card">
-            <div class="img-container"><img src="GOODSP.jpeg" alt="Goodspeed" loading="lazy"></div>
+            <img src="GOODSP.jpeg" alt="Nueva Playera" loading="lazy"> 
             <div class="brand-model">GOODSPEED</div>
             <div style="color:#666; font-size:0.8rem; margin-top:5px;">| EDICIÓN LIMITADA |</div>
             <button class="view-btn" onclick="openModal('m3')">VER PLAYERA</button>
         </div>
 
         <div class="product-card">
-            <div class="img-container"><img src="LV.jpeg" alt="LV" loading="lazy"></div>
+            <img src="LV.jpeg" alt="Nueva Playera" loading="lazy"> 
             <div class="brand-model">LOUIS VUITTON</div>
             <div style="color:#666; font-size:0.8rem; margin-top:5px;">PLAYERA DE DISEÑADOR</div>
             <button class="view-btn" onclick="openModal('m4')">VER PLAYERA</button>
         </div>
 
         <div class="product-card">
-            <div class="img-container"><img src="ESENTIALS.jpeg" alt="Essentials" loading="lazy"></div>
+            <img src="ESENTIALS.jpeg" alt="Nueva Playera" loading="lazy"> 
             <div class="brand-model">ESSENTIALS NEGRA</div>
             <div style="color:#666; font-size:0.8rem; margin-top:5px;">PLAYERA DE DISEÑADOR</div>
             <button class="view-btn" onclick="openModal('m5')">VER PLAYERA</button>
         </div>
 
         <div class="product-card">
-            <div class="img-container"><img src="AM.jpeg" alt="Amiri White" loading="lazy"></div>
+            <img src="AM.jpeg" alt="Nueva Playera" loading="lazy"> 
             <div class="brand-model">AMIRI WHITE</div>
             <div style="color:#666; font-size:0.8rem; margin-top:5px;">PLAYERA DE DISEÑADOR</div>
             <button class="view-btn" onclick="openModal('m6')">VER PLAYERA</button>
         </div>
 
         <div class="product-card">
-            <div class="img-container"><img src="AMI.jpeg" alt="Amiri Blue" loading="lazy"></div>
+            <img src="AMI.jpeg" alt="Nueva Playera" loading="lazy"> 
             <div class="brand-model">AMIRI BLUE</div>
             <div style="color:#666; font-size:0.8rem; margin-top:5px;">PLAYERA DE DISEÑADOR</div>
             <button class="view-btn" onclick="openModal('m7')">VER PLAYERA</button>
         </div>
+
     </div>
 
     <div id="m1" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('m1')">&times;</span>
-            <div class="main-view"><img src="gucc7.jpeg" alt="Gucci Detail"></div>
+            <div class="main-view">
+                <img src="gucc7.jpeg" alt="Essentials Frente" loading="lazy"> </div>
             <div class="detail-view">
                 <h2>GUCCI RESALTA EN GTO</h2>
-                <p>CALIDAD OG SOLO PARA LOS QUE VISTEN BIEN</p>
+                <p>CALIDAD OG SOLO PARA LOS QUE VISTEN BIEN </p>
                 <div class="detail-grid">
-                    <div class="detail-item"><img src="bolsagucci.jpeg" alt="Bolsa"><p>BOLSA GUCCI</p></div>
+                    <div class="detail-item">
+                        <img src="bolsagucci.jpeg" alt="Essentials Print" loading="lazy"> <p>BOLSA GUCCI</p>
+                    </div>
                 </div>
                 <div style="margin-top: 30px; background: #222; padding: 15px; border-radius: 10px;">
                     <p style="margin:0; font-size: 1.2rem; color: var(--neon-blue);">$749 MXN</p>
                 </div>
-                <button class="view-btn" style="background:#fff; color:#000;" onclick="pedir('GUCCI ROJA')">PEDIR POR WHATSAPP →</button>
+                <button class="view-btn" style="background:#fff; color:#000; margin-top:30px;" onclick="pedir('GUCCI ROJA')">PEDIR POR WHATSAPP →</button>
             </div>
         </div>
     </div>
@@ -268,18 +300,23 @@
     <div id="modal2" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('modal2')">&times;</span>
-            <div class="main-view"><img src="HELLSTARF.jpeg" alt="Hellstar"></div>
+            <div class="main-view">
+                <img src="HELLSTARF.jpeg" alt="Hellstar Frente" loading="lazy"> </div>
             <div class="detail-view">
                 <h2>HELLSTAR THE FUTURE</h2>
                 <p>Gráficos de alta densidad. Corte Oversize.</p>
                 <div class="detail-grid">
-                    <div class="detail-item"><img src="HELLSTART.jpeg" alt="Trasera"><p>VISTA TRASERA</p></div>
-                    <div class="detail-item"><img src="NFC.jpeg" alt="NFC"><p>AUTENTICIDAD</p></div>
+                    <div class="detail-item">
+                        <img src="HELLSTART.jpeg" alt="Hellstar Espalda" loading="lazy"> <p>VISTA TRASERA</p>
+                    </div>
+                    <div class="detail-item">
+                        <img src="NFC.jpeg" alt="Hellstar Etiqueta" loading="lazy"> <p>AUTENTICIDAD</p>
+                    </div>
                 </div>
                 <div style="margin-top: 30px; background: #222; padding: 15px; border-radius: 10px;">
                     <p style="margin:0; font-size: 1.2rem; color: var(--neon-blue);">$799 MXN</p>
                 </div>
-                <button class="view-btn" style="background:#fff; color:#000;" onclick="pedir('Hellstar THE FUTURE')">PEDIR POR WHATSAPP →</button>
+                <button class="view-btn" style="background:#fff; color:#000; margin-top:30px;" onclick="pedir('Hellstar THE FUTURE')">PEDIR POR WHATSAPP →</button>
             </div>
         </div>
     </div>
@@ -287,18 +324,26 @@
     <div id="m3" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('m3')">&times;</span>
-            <div class="main-view"><img src="GOOD_SPEED.jpeg" alt="Goodspeed"></div>
+            <div class="main-view">
+                <img src="GOOD_SPEED.jpeg" alt="Frente" loading="lazy">
+            </div>
             <div class="detail-view">
                 <h2>GOOD SPEED</h2>
                 <p>NO VISTAS COMO TODOS EN GTO , SE DIFERENTE Y RESALTA</p>
                 <div class="detail-grid">
-                    <div class="detail-item"><img src="GOOD_SPEEDT.jpeg" alt="Trasera"><p>VISTA TRASERA</p></div>
-                    <div class="detail-item"><img src="ETIQUETAG.jpeg" alt="Etiqueta"><p>ETIQUETA</p></div>
+                    <div class="detail-item">
+                        <img src="GOOD_SPEEDT.jpeg" alt="Espalda" loading="lazy">
+                        <p>VISTA TRASERA</p>
+                    </div>
+                    <div class="detail-item">
+                        <img src="ETIQUETAG.jpeg" alt="Etiqueta" loading="lazy">
+                        <p>ETIQUETA</p>
+                    </div>
                 </div>
                 <div style="margin-top: 30px; background: #222; padding: 15px; border-radius: 10px;">
                     <p style="margin:0; font-size: 1.2rem; color: var(--neon-blue);">799$MXN</p>
                 </div>
-                <button class="view-btn" style="background:#fff; color:#000;" onclick="pedir('GOOD SPEED')">PEDIR POR WHATSAPP →</button>
+                <button class="view-btn" style="background:#fff; color:#000; margin-top:30px;" onclick="pedir('GOOD SPEED')">PEDIR POR WHATSAPP →</button>
             </div>
         </div>
     </div>
@@ -306,18 +351,23 @@
     <div id="m4" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('m4')">&times;</span>
-            <div class="main-view"><img src="LV1.jpeg" alt="LV"></div>
+            <div class="main-view">
+                <img src="LV1.jpeg" alt="Essentials Frente" loading="lazy"> </div>
             <div class="detail-view">
                 <h2>VISTE CARO CON IMPERIUM</h2>
-                <p>CALIDAD OG SOLO PARA LOS QUE VISTEN BIEN</p>
+                <p>CALIDAD OG SOLO PARA LOS QUE VISTEN BIEN </p>
                 <div class="detail-grid">
-                    <div class="detail-item"><img src="LV2.jpeg" alt="Trasera"><p>PARTE TRASERA</p></div>
-                    <div class="detail-item"><img src="LV3.jpeg" alt="Etiquetas"><p>ETIQUETAS OG</p></div>
+                    <div class="detail-item">
+                        <img src="LV2.jpeg" alt="Essentials Print" loading="lazy"> <p>PARTE TRASERA</p>
+                    </div>
+                    <div class="detail-item">
+                        <img src="LV3.jpeg" alt="Essentials Print" loading="lazy"> <p>ETIQUETAS OG</p>
+                    </div>
                 </div>
                 <div style="margin-top: 30px; background: #222; padding: 15px; border-radius: 10px;">
                     <p style="margin:0; font-size: 1.2rem; color: var(--neon-blue);">$749 MXN</p>
                 </div>
-                <button class="view-btn" style="background:#fff; color:#000;" onclick="pedir('LV WHITE')">PEDIR POR WHATSAPP →</button>
+                <button class="view-btn" style="background:#fff; color:#000; margin-top:30px;" onclick="pedir('LV WHITE')">PEDIR POR WHATSAPP →</button>
             </div>
         </div>
     </div>
@@ -325,17 +375,20 @@
     <div id="m5" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('m5')">&times;</span>
-            <div class="main-view"><img src="ES1.jpeg" alt="Essentials"></div>
+            <div class="main-view">
+                <img src="ES1.jpeg" alt="Essentials Frente" loading="lazy"> </div>
             <div class="detail-view">
                 <h2>PERFECTA PARA VESTIR TOTAL BLACK</h2>
-                <p>CALIDAD OG SOLO PARA LOS QUE VISTEN BIEN</p>
+                <p>CALIDAD OG SOLO PARA LOS QUE VISTEN BIEN </p>
                 <div class="detail-grid">
-                    <div class="detail-item"><img src="ES2.jpeg" alt="Bolsa"><p>BOLSA ESSENTIALS</p></div>
+                    <div class="detail-item">
+                        <img src="ES2.jpeg" alt="Essentials Print" loading="lazy"> <p>BOLSA ESSENTIALS</p>
+                    </div>
                 </div>
                 <div style="margin-top: 30px; background: #222; padding: 15px; border-radius: 10px;">
                     <p style="margin:0; font-size: 1.2rem; color: var(--neon-blue);">$799 MXN</p>
                 </div>
-                <button class="view-btn" style="background:#fff; color:#000;" onclick="pedir('Essentials Negra')">PEDIR POR WHATSAPP →</button>
+                <button class="view-btn" style="background:#fff; color:#000; margin-top:30px;" onclick="pedir('Essentials Negra')">PEDIR POR WHATSAPP →</button>
             </div>
         </div>
     </div>
@@ -343,18 +396,23 @@
     <div id="m6" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('m6')">&times;</span>
-            <div class="main-view"><img src="AM1.jpeg" alt="Amiri White"></div>
+            <div class="main-view">
+                <img src="AM1.jpeg" alt="Essentials Frente" loading="lazy"> </div>
             <div class="detail-view">
                 <h2>AMIRI RESALTA EN GTO, NO VISTAS COMO TODOS</h2>
-                <p>CALIDAD OG SOLO PARA LOS QUE VISTEN BIEN</p>
+                <p>CALIDAD OG SOLO PARA LOS QUE VISTEN BIEN </p>
                 <div class="detail-grid">
-                    <div class="detail-item"><img src="AM2.jpeg" alt="Trasera"><p>PARTE TRASERA</p></div>
-                    <div class="detail-item"><img src="AM3.jpeg" alt="Etiqueta"><p>ETIQUETAS OG</p></div>
+                    <div class="detail-item">
+                        <img src="AM2.jpeg" alt="Essentials Print" loading="lazy"> <p>PARTE TRASERA </p>
+                    </div>
+                    <div class="detail-item">
+                        <img src="AM3.jpeg" alt="Essentials Print" loading="lazy"> <p>ETIQUETAS OG</p>
+                    </div>
                 </div>
                 <div style="margin-top: 30px; background: #222; padding: 15px; border-radius: 10px;">
                     <p style="margin:0; font-size: 1.2rem; color: var(--neon-blue);">$749 MXN</p>
                 </div>
-                <button class="view-btn" style="background:#fff; color:#000;" onclick="pedir('AMIRI WHITE')">PEDIR POR WHATSAPP →</button>
+                <button class="view-btn" style="background:#fff; color:#000; margin-top:30px;" onclick="pedir('AMIRI WHITE')">PEDIR POR WHATSAPP →</button>
             </div>
         </div>
     </div>
@@ -362,10 +420,13 @@
     <div id="m7" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('m7')">&times;</span>
-            <div class="main-view"><img src="A.jpeg" alt="Amiri Blue"></div>
+            <div class="main-view">
+                <img src="A.jpeg" alt="Essentials Frente" loading="lazy"> </div>
             <div class="detail-view">
                 <h2>AMIRI RESALTA EN GTO, NO VISTAS COMO TODOS</h2>
-                <p>CALIDAD OG SOLO PARA LOS QUE VISTEN BIEN</p>
+                <p>CALIDAD OG SOLO PARA LOS QUE VISTEN BIEN </p>
+                <div class="detail-grid">
+                </div>
                 <div style="margin-top: 30px; background: #222; padding: 15px; border-radius: 10px;">
                     <p style="margin:0; font-size: 1.2rem; color: var(--neon-blue);">$749 MXN</p>
                 </div>
@@ -375,23 +436,24 @@
     </div>
 
     <script>
+        // Función para el WhatsApp
         function pedir(producto) {
-            const tel = "524792306863";
+            const tel = "524792306863"; 
             const msg = `Hola Imperium Star, me interesa el drop: ${producto}. ¿Tienen disponibilidad?`;
-            window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+            window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
+        /* FUNCIONES DE MODAL */
         function openModal(id) { 
-            const m = document.getElementById(id);
-            m.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Evita scroll de fondo
+            document.getElementById(id).style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Evita que el fondo se mueva al abrir modal
         }
-
+        
         function closeModal(id) { 
-            document.getElementById(id).style.display = 'none'; 
-            document.body.style.overflow = 'auto';
+            document.getElementById(id).style.display = 'none';
+            document.body.style.overflow = 'auto'; // Devuelve el scroll
         }
-
+        
         window.onclick = function(event) {
             if (event.target.className === 'modal') {
                 event.target.style.display = 'none';
@@ -399,5 +461,6 @@
             }
         }
     </script>
+
 </body>
 </html>
